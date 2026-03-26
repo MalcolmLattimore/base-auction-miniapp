@@ -1,0 +1,18 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#06101D"/>
+  <circle cx="1021" cy="121" r="195" fill="#65E4FF" fill-opacity="0.16"/>
+  <circle cx="177" cy="520" r="214" fill="#FF7B9C" fill-opacity="0.16"/>
+  <rect x="62" y="52" width="1076" height="526" rx="36" fill="url(#paint0_linear)"/>
+  <path d="M123 460L302 175H415L580 460H474L436 379H258L217 460H123Z" fill="#F7F9FC"/>
+  <path d="M715 184H1012" stroke="#5BF7B3" stroke-width="12" stroke-linecap="round"/>
+  <text x="709" y="267" fill="#F7F9FC" font-size="86" font-family="Georgia, serif" font-weight="700">Base Auction</text>
+  <text x="709" y="332" fill="#A7B8D8" font-size="34" font-family="Georgia, serif">基于智能合约的拍卖应用</text>
+  <text x="709" y="414" fill="#FFD166" font-size="30" font-family="Georgia, serif">Timed bidding, settlement, event tracking</text>
+  <defs>
+    <linearGradient id="paint0_linear" x1="82" y1="63" x2="1085" y2="568" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#11253D"/>
+      <stop offset="0.58" stop-color="#091626"/>
+      <stop offset="1" stop-color="#153455"/>
+    </linearGradient>
+  </defs>
+</svg>
