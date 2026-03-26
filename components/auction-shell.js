@@ -90,7 +90,7 @@ export function AuctionShell() {
   const timeLeft = Math.max(auctionEndTime - now, 0);
 
   const primaryConnector = useMemo(
-    () => connectors.find((connector) => connector.name.toLowerCase().includes('injected')) || connectors[0],
+    () => connectors.find((connector) => connector.id === 'baseAccount') || connectors.find((connector) => connector.id === 'injected') || connectors[0],
     [connectors]
   );
 
@@ -282,7 +282,7 @@ export function AuctionShell() {
                 onClick={() => primaryConnector && connect({ connector: primaryConnector })}
               >
                 <Wallet size={16} />
-                {isConnecting ? 'Connecting...' : 'Connect Wallet'}
+                {isConnecting ? 'Connecting...' : primaryConnector?.id === 'baseAccount' ? 'Connect Base Account' : 'Connect Wallet'}
               </button>
             )}
           </div>
