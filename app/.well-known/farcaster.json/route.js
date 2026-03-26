@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { BASE_BUILDER_CODE, BASE_BUILDER_DATA_SUFFIX } from '@/lib/base-builder';
 
 const APP_NAME = 'Base Auction';
 const APP_DESCRIPTION = '基于智能合约的拍卖应用';
@@ -47,6 +48,8 @@ export async function GET() {
     },
     baseBuilder: {
       appId: BASE_APP_ID,
+      builderCode: BASE_BUILDER_CODE,
+      encodedDataSuffix: BASE_BUILDER_DATA_SUFFIX,
       ownerAddress: '0x79E15d2b057A9BaB49B081F38Fc664d23e570D3A'
     }
   });
