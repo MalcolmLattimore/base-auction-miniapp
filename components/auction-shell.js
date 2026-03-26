@@ -72,7 +72,7 @@ export function AuctionShell() {
       { address: AUCTION_ADDRESS, abi: auctionAbi, functionName: 'auctionEndTime' },
       { address: AUCTION_ADDRESS, abi: auctionAbi, functionName: 'auctionEnded' }
     ],
-    allowFailure: false
+    allowFailure: true
   });
 
   const { data: currentHighestBid, refetch: refetchHighestBid } = useReadContract({
@@ -88,9 +88,14 @@ export function AuctionShell() {
   const auctionEnded = Boolean(summary?.[4]?.result);
   const isOwner = address && owner ? address.toLowerCase() === owner.toLowerCase() : false;
   const timeLeft = Math.max(auctionEndTime - now, 0);
+  const auctionStarted = auctionEndTime > 0;
+  const canBid = auctionStarted && !auctionEnded && timeLeft > 0;
 
   const primaryConnector = useMemo(
-    () => connectors.find((connector) => connector.id === 'baseAccount') || connectors.find((connector) => connector.id === 'injected') || connectors[0],
+    () =>
+      connectors.find((connector) => connector.id === 'baseAccount') ||
+      connectors.find((connector) => connector.id === 'injected') ||
+      connectors[0],
     [connectors]
   );
 
@@ -156,13 +161,9 @@ export function AuctionShell() {
           .sort((a, b) => b.blockNumber - a.blockNumber)
           .slice(0, 6);
 
-        if (mounted) {
-          setEvents(mapped);
-        }
+        if (mounted) setEvents(mapped);
       } catch {
-        if (mounted) {
-          setEvents([]);
-        }
+        if (mounted) setEvents([]);
       }
     }
 
@@ -178,14 +179,19 @@ export function AuctionShell() {
 
   async function runTransaction(config, successMessage) {
     if (!address) {
-      setFeedback('Please connect a wallet first.');
+      setFeedback('Please connect Base Account first.');
       return;
     }
 
     try {
       setIsSubmitting(true);
+      setFeedback('Checking transaction conditions...');
+      const simulation = await publicClient.simulateContract({
+        ...config,
+        account: address
+      });
       setFeedback('Waiting for wallet confirmation...');
-      const hash = await writeContractAsync(config);
+      const hash = await writeContractAsync(simulation.request);
       setFeedback('Transaction sent. Waiting for confirmation...');
       setLastHash(hash);
       await publicClient.waitForTransactionReceipt({ hash });
@@ -222,10 +228,25 @@ export function AuctionShell() {
   }
 
   async function handleBid() {
+    if (!auctionStarted) {
+      setFeedback('This auction has not been started by the owner yet.');
+      return;
+    }
+
+    if (auctionEnded || timeLeft <= 0) {
+      setFeedback('This auction is no longer accepting bids.');
+      return;
+    }
+
     try {
       const value = parseEther(bidAmount || '0');
       if (value <= 0n) {
         setFeedback('Bid amount must be greater than zero.');
+        return;
+      }
+
+      if (value <= highestBid) {
+        setFeedback('Your bid must be higher than the current highest bid.');
         return;
       }
 
@@ -282,7 +303,11 @@ export function AuctionShell() {
                 onClick={() => primaryConnector && connect({ connector: primaryConnector })}
               >
                 <Wallet size={16} />
-                {isConnecting ? 'Connecting...' : primaryConnector?.id === 'baseAccount' ? 'Connect Base Account' : 'Connect Wallet'}
+                {isConnecting
+                  ? 'Connecting...'
+                  : primaryConnector?.id === 'baseAccount'
+                    ? 'Connect Base Account'
+                    : 'Connect Wallet'}
               </button>
             )}
           </div>
@@ -310,7 +335,7 @@ export function AuctionShell() {
               </div>
               <div className="mini-stat">
                 <span>Time remaining</span>
-                <strong>{formatTimeLeft(timeLeft)}</strong>
+                <strong>{auctionStarted ? formatTimeLeft(timeLeft) : 'Not started'}</strong>
               </div>
             </div>
           </div>
@@ -318,11 +343,13 @@ export function AuctionShell() {
           <div className="side-stack">
             <div className="hero-badge card">
               <span className="eyebrow">Live Status</span>
-              <strong>{auctionEnded ? 'Auction Closed' : 'Auction Open'}</strong>
+              <strong>{!auctionStarted ? 'Awaiting Start' : auctionEnded ? 'Auction Closed' : 'Auction Open'}</strong>
               <p>
-                {auctionEnded
-                  ? 'Settlement has completed and the final transfer has been executed.'
-                  : 'Bids can continue until the countdown ends or the owner settles after expiry.'}
+                {!auctionStarted
+                  ? 'The owner must start the auction first before any bid can be submitted.'
+                  : auctionEnded
+                    ? 'Settlement has completed and the final transfer has been executed.'
+                    : 'Bids can continue until the countdown ends or the owner settles after expiry.'}
               </p>
             </div>
             <div className="hero-badge card">
@@ -366,7 +393,11 @@ export function AuctionShell() {
 
               <div className="action-card">
                 <h3>Place bid</h3>
-                <p>Send a higher ETH amount than the current leader. Previous top bids are refunded by contract.</p>
+                <p>
+                  {auctionStarted
+                    ? 'Send a higher ETH amount than the current leader. Previous top bids are refunded by contract.'
+                    : 'The owner must start the auction first. Until then, bids will fail even if your wallet has enough funds.'}
+                </p>
                 <div className="field-row">
                   <input
                     className="input"
@@ -374,7 +405,7 @@ export function AuctionShell() {
                     onChange={(event) => setBidAmount(event.target.value)}
                     placeholder="Bid amount in ETH"
                   />
-                  <button className="button" disabled={isSubmitting || auctionEnded} onClick={handleBid}>
+                  <button className="button" disabled={isSubmitting || !canBid} onClick={handleBid}>
                     {isSubmitting ? <LoaderCircle size={18} /> : <Sparkles size={18} />}
                     Bid
                   </button>
@@ -425,13 +456,13 @@ export function AuctionShell() {
               <div className="status-grid">
                 <div className="status-card">
                   <div className="status-label">Owner</div>
-                  <div className="status-value">{shortAddress(owner)}</div>
+                  <div className="status-value">{owner ? shortAddress(owner) : 'Loading...'}</div>
                 </div>
                 <div className="status-card">
                   <div className="status-label">Status</div>
                   <div className="status-value">
                     <span className={`status-pill ${auctionEnded ? 'closed' : ''}`}>
-                      {auctionEnded ? 'Closed' : 'Accepting bids'}
+                      {!auctionStarted ? 'Not started' : auctionEnded ? 'Closed' : 'Accepting bids'}
                     </span>
                   </div>
                 </div>
