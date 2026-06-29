@@ -93,3 +93,8 @@ As the project grows, consider documenting:
 - User flows
 - Testing strategy
 - Known limitations
+- Contribution guidelines
+
+## Contributing
+
+Contributions should preserve the purpose and identity of the project.
