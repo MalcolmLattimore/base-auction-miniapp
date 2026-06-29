@@ -111,3 +111,9 @@ Before submitting changes, verify that:
 This README is based on the currently available project information.
 
 As more implementation details are added to the repository, this document should be updated to reflect the actual setup, architecture, and usage patterns.
+
+## License
+
+No license information is included in the original README.
+
+If a license file exists in the repository, refer to that file for the applicable terms.
