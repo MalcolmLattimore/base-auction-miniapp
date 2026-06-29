@@ -16,3 +16,8 @@ Use this document as the starting point for understanding, setting up, running, 
 
 - Project identity: `base-auction`
 - Repository URL: `https://github.com/MalcolmLattimore/base-auction-miniapp.git`
+- Miniapp-oriented project structure
+- Designed as a base for auction-related functionality
+- Suitable for incremental development and documentation updates
+
+## Repository
