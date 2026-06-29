@@ -62,3 +62,10 @@ After setup, check the available project scripts.
 If a `package.json` file is present, you can usually list or inspect available commands there.
 
 Common commands may include:
+
+- `npm run dev`
+- `npm run build`
+- `npm run start`
+- `npm run test`
+
+Run only the commands that are actually defined by the project.
