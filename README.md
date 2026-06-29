@@ -40,3 +40,9 @@ Common setup steps may include:
 - Checking for a `package.json`, lockfile, or framework-specific configuration
 - Installing dependencies if the project includes a dependency manifest
 - Reviewing environment configuration requirements, if any are documented in the repository
+
+If the project uses Node.js, the setup flow is typically:
+
+`npm install`
+
+or, depending on the lockfile present:
