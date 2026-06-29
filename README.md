@@ -81,3 +81,9 @@ Recommended workflow:
 3. Test the project locally where applicable.
 4. Update documentation when behavior or setup changes.
 5. Commit with a clear message.
+
+## Suggested Project Documentation
+
+As the project grows, consider documenting:
+
+- Local development requirements
