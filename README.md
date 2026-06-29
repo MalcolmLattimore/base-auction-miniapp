@@ -58,3 +58,7 @@ Use the package manager that matches the files committed to the repository.
 ## Usage
 
 After setup, check the available project scripts.
+
+If a `package.json` file is present, you can usually list or inspect available commands there.
+
+Common commands may include:
