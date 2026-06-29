@@ -98,3 +98,10 @@ As the project grows, consider documenting:
 ## Contributing
 
 Contributions should preserve the purpose and identity of the project.
+
+Before submitting changes, verify that:
+
+- The project still builds or runs as expected
+- Any relevant documentation has been updated
+- New behavior is described clearly
+- Existing functionality is not broken unintentionally
