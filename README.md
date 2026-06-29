@@ -33,3 +33,10 @@ Then enter the project directory:
 ## Setup
 
 After cloning the repository, inspect the project files to determine the required runtime and package manager.
+
+Common setup steps may include:
+
+- Reviewing the root directory for configuration files
+- Checking for a `package.json`, lockfile, or framework-specific configuration
+- Installing dependencies if the project includes a dependency manifest
+- Reviewing environment configuration requirements, if any are documented in the repository
