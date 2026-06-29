@@ -87,3 +87,9 @@ Recommended workflow:
 As the project grows, consider documenting:
 
 - Local development requirements
+- Environment variables
+- Build and deployment steps
+- Auction data model and business rules
+- User flows
+- Testing strategy
+- Known limitations
