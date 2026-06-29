@@ -46,3 +46,9 @@ If the project uses Node.js, the setup flow is typically:
 `npm install`
 
 or, depending on the lockfile present:
+
+`yarn install`
+
+or:
+
+`pnpm install`
