@@ -69,3 +69,9 @@ Common commands may include:
 - `npm run test`
 
 Run only the commands that are actually defined by the project.
+
+## Development Notes
+
+Keep changes focused and easy to review.
+
+Recommended workflow:
