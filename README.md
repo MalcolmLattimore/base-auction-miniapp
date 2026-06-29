@@ -21,3 +21,9 @@ Use this document as the starting point for understanding, setting up, running, 
 - Suitable for incremental development and documentation updates
 
 ## Repository
+
+Clone the repository with:
+
+`git clone https://github.com/MalcolmLattimore/base-auction-miniapp.git`
+
+Then enter the project directory:
