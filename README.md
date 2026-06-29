@@ -52,3 +52,9 @@ or, depending on the lockfile present:
 or:
 
 `pnpm install`
+
+Use the package manager that matches the files committed to the repository.
+
+## Usage
+
+After setup, check the available project scripts.
