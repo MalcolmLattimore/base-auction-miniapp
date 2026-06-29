@@ -27,3 +27,9 @@ Clone the repository with:
 `git clone https://github.com/MalcolmLattimore/base-auction-miniapp.git`
 
 Then enter the project directory:
+
+`cd base-auction-miniapp`
+
+## Setup
+
+After cloning the repository, inspect the project files to determine the required runtime and package manager.
