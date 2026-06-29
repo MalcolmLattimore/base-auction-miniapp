@@ -105,3 +105,9 @@ Before submitting changes, verify that:
 - Any relevant documentation has been updated
 - New behavior is described clearly
 - Existing functionality is not broken unintentionally
+
+## Notes
+
+This README is based on the currently available project information.
+
+As more implementation details are added to the repository, this document should be updated to reflect the actual setup, architecture, and usage patterns.
