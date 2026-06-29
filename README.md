@@ -75,3 +75,9 @@ Run only the commands that are actually defined by the project.
 Keep changes focused and easy to review.
 
 Recommended workflow:
+
+1. Create a new branch for your change.
+2. Make a small, focused update.
+3. Test the project locally where applicable.
+4. Update documentation when behavior or setup changes.
+5. Commit with a clear message.
